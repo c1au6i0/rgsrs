@@ -1,0 +1,28 @@
+# R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rcheck/
+*.tar.gz
+*.zip
+
+# renv
+renv/library/
+renv/staging/
+
+# pkgdown
+docs/
+
+# Generated documentation
+man/*.Rd
+NAMESPACE
+
+# README (generated from Rmd)
+README.md
+
+# macOS
+.DS_Store
+
+# Test artifacts
+tests/testthat/Rplots.pdf

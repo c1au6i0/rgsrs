@@ -1,0 +1,31 @@
+Package: rgsrs
+Title: Query the FDA Global Substance Registration System (GSRS) API
+Version: 0.1.0
+Authors@R: c(
+    person("Claudio", "Zanettini", , "claudio@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-5043-8033"))
+  )
+Description: Provides functions to query the FDA Global Substance Registration
+    System (GSRS) REST API (<https://gsrs.ncats.nih.gov/api/v1/>). Enables
+    programmatic access to substance records, UNII identifiers, synonyms,
+    external codes (CAS, PubChem, ChEMBL, etc.), and chemical structures for
+    over 170,000 registered substances.
+License: MIT + file LICENSE
+Depends: R (>= 4.1)
+Imports:
+    cli,
+    httr2,
+    janitor,
+    pingr,
+    rlang
+Suggests:
+    openxlsx,
+    testthat (>= 3.0.0),
+    withr
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: false
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+URL: https://github.com/c1au6i0/rgsrs
+BugReports: https://github.com/c1au6i0/rgsrs/issues
