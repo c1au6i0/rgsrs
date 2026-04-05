@@ -46,6 +46,9 @@ gsrs_all <- function(unii, verbose = TRUE, delay = 0.5) {
 #' @keywords internal
 #' @noRd
 gsrs_all_out <- function(unii, verbose = TRUE, delay = 0.5) {
+  check_internet(verbose = FALSE)
+  unii <- check_ids(unii, "unii")
+
   substance_dat <- gsrs_substance(unii, verbose = verbose, delay = delay)
   names_dat <- gsrs_names(unii, verbose = verbose, delay = delay)
   codes_dat <- gsrs_codes(unii, verbose = verbose, delay = delay)

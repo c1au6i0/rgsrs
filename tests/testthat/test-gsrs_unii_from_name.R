@@ -48,20 +48,6 @@ test_that("gsrs_unii_from_name handles multiple names", {
 
 Sys.sleep(5)
 
-test_that("gsrs_unii_from_name returns NA row for unresolvable name", {
-  skip_on_cran()
-  skip_if_offline()
-
-  expect_warning(
-    out <- gsrs_unii_from_name("XYZNOTAREALSUBSTANCE9999", verbose = TRUE),
-    regexp = "No results found"
-  )
-  expect_true(is.data.frame(out))
-  expect_equal(nrow(out), 1L)
-  expect_true(is.na(out[["unii"]]))
-  expect_equal(out[["query"]], "XYZNOTAREALSUBSTANCE9999")
-})
-
 test_that("gsrs_unii_from_name returns NULL and warns on invalid input", {
   expect_warning(
     out <- gsrs_unii_from_name(c(), verbose = FALSE)

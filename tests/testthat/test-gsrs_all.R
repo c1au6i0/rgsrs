@@ -57,7 +57,8 @@ test_that("gsrs_all codes element has correct structure", {
 
 test_that("gsrs_all returns NULL and warns on invalid input", {
   expect_warning(
-    out <- gsrs_all(c(), verbose = FALSE)
+    out <- gsrs_all(c(), verbose = FALSE),
+    regexp = "failed"
   )
   expect_null(out)
 })

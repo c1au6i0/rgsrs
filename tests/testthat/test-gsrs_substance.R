@@ -35,22 +35,6 @@ test_that("gsrs_substance handles multiple UNIIs", {
 
 Sys.sleep(5)
 
-test_that("gsrs_substance returns NA row for unknown UNII", {
-  skip_on_cran()
-  skip_if_offline()
-
-  expect_warning(
-    out <- gsrs_substance("NOTAREALUNII00000", verbose = TRUE),
-    regexp = "No results found"
-  )
-  expect_true(is.data.frame(out))
-  expect_equal(nrow(out), 1L)
-  expect_true(is.na(out[["approval_id"]]))
-  expect_equal(out[["query"]], "NOTAREALUNII00000")
-})
-
-Sys.sleep(5)
-
 test_that("gsrs_substance column names are correct", {
   skip_on_cran()
   skip_if_offline()

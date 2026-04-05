@@ -4,12 +4,11 @@ output: md_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  eval = FALSE
 )
 ```
 
@@ -19,72 +18,59 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/c1au6i0/rgsrs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/c1au6i0/rgsrs/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`rgsrs` provides a tidy R interface to the
-[FDA Global Substance Registration System (GSRS)](https://gsrs.ncats.nih.gov/)
-REST API. It allows you to search for substances, retrieve substance metadata
-by UNII, look up all registered names (synonyms), fetch cross-reference codes
-(CAS, PubChem, ChEMBL, WHO-ATC, etc.), and resolve common names to their UNII.
+Tidy R client for the [FDA Global Substance Registration System (GSRS)](https://gsrs.ncats.nih.gov/) REST API. Retrieve substance metadata, synonyms, and cross-reference codes (CAS, PubChem, ChEMBL, WHO-ATC, …) for any of the 170 000+ registered substances.
+
+No API key required.
 
 ## Installation
 
-```{r eval=FALSE}
-# Install the development version from GitHub:
+```{r}
 # install.packages("pak")
 pak::pak("c1au6i0/rgsrs")
 ```
 
-## Core functions
+## Functions
 
 | Function | Description |
 |---|---|
-| `gsrs_search()` | Free-text or Lucene-syntax search across all substances |
-| `gsrs_substance()` | Fetch substance metadata by UNII |
+| `gsrs_search()` | Free-text or Lucene-syntax search |
+| `gsrs_substance()` | Substance metadata by UNII (vectorised) |
 | `gsrs_names()` | All registered synonyms for a UNII |
-| `gsrs_codes()` | All cross-reference codes (CAS, PubChem, ChEMBL, …) for a UNII |
+| `gsrs_codes()` | Cross-reference codes for a UNII, with optional `code_system` filter |
 | `gsrs_unii_from_name()` | Resolve a substance name to its UNII |
-| `gsrs_all()` | Convenience wrapper returning substance + names + codes |
-| `write_dataframes_to_excel()` | Write a named list of data frames to Excel |
+| `gsrs_all()` | Convenience wrapper: substance + names + codes in one call |
+| `write_dataframes_to_excel()` | Write a named list of data frames to `.xlsx` |
 
 ## Usage
 
-```{r eval=FALSE}
+```{r}
 library(rgsrs)
 
-# Search for aspirin
-results <- gsrs_search("aspirin", top = 5)
+# Search
+gsrs_search("aspirin", top = 5)
 
-# Fetch substance record by UNII
-aspirin <- gsrs_substance("R16CO5Y76E")
+# Fetch by UNII (aspirin = R16CO5Y76E)
+gsrs_substance("R16CO5Y76E")
 
-# All registered names for aspirin
-names_df <- gsrs_names("R16CO5Y76E")
+# All synonyms
+gsrs_names("R16CO5Y76E")
 
-# All external codes (CAS, PubChem, etc.)
-codes_df <- gsrs_codes("R16CO5Y76E")
+# Cross-references – all systems
+gsrs_codes("R16CO5Y76E")
 
-# Only CAS numbers
-cas_df <- gsrs_codes("R16CO5Y76E", code_system = "CAS")
+# Cross-references – CAS only
+gsrs_codes("R16CO5Y76E", code_system = "CAS")
 
-# Resolve names to UNIIs
-uniis <- gsrs_unii_from_name(c("aspirin", "ibuprofen"))
+# Name → UNII
+gsrs_unii_from_name(c("aspirin", "ibuprofen"))
 
 # Everything at once
-all_data <- gsrs_all("R16CO5Y76E")
-str(all_data, max.level = 1)
+out <- gsrs_all("R16CO5Y76E")
+str(out, max.level = 1)
 ```
 
-## About GSRS
-
-The FDA Global Substance Registration System (GSRS) is a public database
-maintained by the National Center for Advancing Translational Sciences (NCATS)
-and the FDA.  It assigns a unique UNII (Unique Ingredient Identifier) to every
-registered substance and tracks all known names, cross-references, and
-structural information.
-
-- API base URL: `https://gsrs.ncats.nih.gov/api/v1`
-- No authentication required.
-- Rate-limit courtesy: include reasonable delays between bulk requests.
+All functions accept a `verbose` argument (default `TRUE`) and return tidy data frames with a `query` column tracking the input identifier. Failed lookups return `NULL` with a warning rather than throwing an error.
 
 ## License
 
-MIT © 2024 Claudio Zanettini
+MIT © 2026 Claudio Zanettini

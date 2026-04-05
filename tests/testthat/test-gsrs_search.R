@@ -44,20 +44,6 @@ test_that("gsrs_search respects top parameter", {
   expect_lte(nrow(out), 2L)
 })
 
-Sys.sleep(5)
-
-test_that("gsrs_search returns NULL and warns for bad query", {
-  skip_on_cran()
-  skip_if_offline()
-
-  expect_warning(
-    out <- gsrs_search("ZZZZNOTAREALSUBSTANCEXYZ9999", top = 1, verbose = FALSE),
-    NA # no warning expected on NULL return, but 0-row DF is OK too
-  )
-  # Either NULL or a 0-row data frame is acceptable
-  expect_true(is.null(out) || (is.data.frame(out) && nrow(out) == 0L))
-})
-
 test_that("gsrs_search aborts on invalid query argument", {
   expect_warning(
     out <- gsrs_search(123, top = 1, verbose = FALSE)

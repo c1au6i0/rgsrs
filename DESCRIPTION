@@ -16,9 +16,9 @@ Imports:
     cli,
     httr2,
     janitor,
-    pingr,
-    rlang
+    pingr
 Suggests:
+    fs,
     openxlsx,
     testthat (>= 3.0.0),
     withr
