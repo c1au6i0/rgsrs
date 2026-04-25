@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/c1au6i0/rgsrs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/c1au6i0/rgsrs/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-Tidy R client for the [FDA Global Substance Registration System (GSRS)](https://gsrs.ncats.nih.gov/) REST API. Retrieve substance metadata, synonyms, and cross-reference codes (CAS, PubChem, ChEMBL, WHO-ATC, …) for any of the 170 000+ registered substances.
+Tidy R client for the [FDA Global Substance Registration System (GSRS)](https://gsrs.ncats.nih.gov/) REST API. Retrieve substance metadata, synonyms, cross-reference codes (CAS, PubChem, ChEMBL, WHO-ATC, …), and chemical structure information for any of the 170 000+ registered substances.
 
 No API key required.
 
@@ -38,7 +38,13 @@ pak::pak("c1au6i0/rgsrs")
 | `gsrs_names()` | All registered synonyms for a UNII |
 | `gsrs_codes()` | Cross-reference codes for a UNII, with optional `code_system` filter |
 | `gsrs_unii_from_name()` | Resolve a substance name to its UNII |
-| `gsrs_all()` | Convenience wrapper: substance + names + codes in one call |
+| `gsrs_structure()` | Chemical structure data (SMILES, formula, MW, InChI, …) by UNII |
+| `gsrs_structure_search()` | Substructure / similarity / exact search by SMILES |
+| `gsrs_chem_info()` | Chemical structure info directly from a substance name or CAS number |
+| `gsrs_hierarchy()` | Parent/child relationship tree for a UNII |
+| `gsrs_all()` | Convenience wrapper: substance + names + codes + structure + hierarchy |
+| `gsrs_browse()` | Page through the full GSRS substance catalogue |
+| `gsrs_vocabularies()` | Retrieve controlled vocabulary terms |
 | `write_dataframes_to_excel()` | Write a named list of data frames to `.xlsx` |
 
 ## Usage
@@ -63,6 +69,12 @@ gsrs_codes("R16CO5Y76E", code_system = "CAS")
 
 # Name → UNII
 gsrs_unii_from_name(c("aspirin", "ibuprofen"))
+
+# Chemical structure info by name
+gsrs_chem_info(c("aspirin", "ibuprofen"), type = "name")
+
+# Chemical structure info by CAS number
+gsrs_chem_info(c("50-78-2", "15687-27-1"), type = "cas")
 
 # Everything at once
 out <- gsrs_all("R16CO5Y76E")
