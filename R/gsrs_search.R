@@ -95,7 +95,7 @@ gsrs_search_out <- function(query,
     }
 
     resp <- httr2::request(base) |>
-      httr2::req_url_path_append("substances") |>
+      httr2::req_url_path_append("substances/search") |>
       httr2::req_url_query(q = query, top = top_per_page, skip = current_skip) |>
       httr2::req_retry(max_tries = 5L, backoff = httr2_backoff) |>
       httr2::req_perform()

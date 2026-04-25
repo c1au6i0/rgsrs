@@ -6,9 +6,6 @@ test_that("gsrs_search returns a data frame for a valid query", {
   skip_on_cran()
   skip_if_offline()
 
-  suppressWarnings(
-    out <- gsrs_search("aspirin", top = 5, verbose = FALSE)
-  )
   out <- gsrs_search("aspirin", top = 5, verbose = FALSE)
 
   expect_true(is.data.frame(out))
@@ -16,6 +13,38 @@ test_that("gsrs_search returns a data frame for a valid query", {
   expect_true("approval_id" %in% names(out))
   expect_true("preferred_name" %in% names(out))
   expect_true("uuid" %in% names(out))
+})
+
+Sys.sleep(2)
+
+test_that("gsrs_search results match the query - aspirin", {
+  skip_on_cran()
+  skip_if_offline()
+
+  out <- gsrs_search("aspirin", top = 5, verbose = FALSE)
+
+  # At least one result should be aspirin itself (UNII R16CO5Y76E)
+  expect_true(
+    "R16CO5Y76E" %in% out[["approval_id"]],
+    label = "Aspirin UNII R16CO5Y76E should appear in search results"
+  )
+  # Results should contain aspirin-related names
+  names_lower <- tolower(out[["preferred_name"]])
+  expect_true(any(grepl("aspirin", names_lower)))
+})
+
+Sys.sleep(2)
+
+test_that("gsrs_search results match the query - nicotine", {
+  skip_on_cran()
+  skip_if_offline()
+
+  out <- gsrs_search("nicotine", top = 5, verbose = FALSE)
+
+  expect_true(is.data.frame(out))
+  expect_gt(nrow(out), 0L)
+  names_lower <- tolower(out[["preferred_name"]])
+  expect_true(any(grepl("nicotine", names_lower)))
 })
 
 Sys.sleep(5)

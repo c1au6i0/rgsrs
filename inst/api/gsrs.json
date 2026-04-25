@@ -1,0 +1,2790 @@
+
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample documentation for the GSRS api. The api is located at https://gsrs.ncats.nih.gov/ginas/app/api/v1.\u003Cbr/\u003E\u003Cbr/\u003EA copy of the GSRS schema and data dictionary can be found on the \u003Ca href = '/downloads'\u003EDownloads page\u003C/a\u003E\u003Cbr/\u003E\u003Cbr/\u003EFor additional documentation, find these resources on our GitHub repository \u003Ca href='https://github.com/ncats/gsrs3-main-deployment' class='temp-color'\u003Encats/gsrs3-main-deployment\u003C/a\u003E\u003Cbr/\u003E\u003Cul\u003E\u003Cli\u003E\u003Ca href='https://github.com/ncats/gsrs3-main-deployment' class='temp-color'\u003EReadme\u003C/a\u003E\u003C/li\u003E\u003Cli\u003E\u003Ca href='https://github.com/ncats/gsrs3-main-deployment/wiki' class='temp-color'\u003EWiki\u003C/a\u003E\u003C/li\u003E\u003Cli\u003E\u003Ca href='https://github.com/ncats/gsrs3-main-deployment/tree/main/docs' class='temp-color'\u003EDocs folder\u003C/a\u003E\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EFor the Swagger below, please note that the demos of the 'Create / Update' and 'Administrative' calls will not work here and need to be tested on a local instance while logged in as an admin.\u003C/p\u003E",
+    "version": "v2",
+    "title": "GSRS API",
+    "contact": {
+      "email": "ncatsgsrs@mail.nih.gov"
+    },
+    "license": {
+      "name": "APACHE LICENSE, VERSION 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "gsrs.ncats.nih.gov",
+  "basePath": "/ginas/app",
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "browse",
+      "description": "Browse resources"
+    },
+    {
+      "name": "text search",
+      "description": "Search by name, code, or other text fields"
+    },
+    {
+      "name": "chemical search",
+      "description": "Search by chemical structure"
+    },
+    {
+      "name": "meta search",
+      "description": "Search within facets, filters, and suggestion lists"
+    },
+    {
+      "name": "details",
+      "description": "Get details of a record"
+    },
+    {
+      "name": "create and update",
+      "description": "Create, update, validate and approve records"
+    },
+    {
+      "name": "user saved list",
+      "description": "Create, retrieve, update, and delete user saved list"
+    },
+    {
+      "name": "Administrative",
+      "description": "User and data management, back-end tasks and info"
+    },
+    {
+      "name": "service info",
+      "description": "Provide information about an individual service, provide GSRS Gateway-friendly paths to actuator endpoints. Note that service context is different from the entity context. The service is typically equal the value of 'application.name' in the service's configuration and in turn equal to the folder name in gsrs3-main-deployment where the service CI code lives."
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "auth-username": {
+      "name": "auth-username",
+      "in": "header",
+      "required": "true",
+      "type": "apiKey"
+    },
+    "auth-key": {
+      "name": "auth-key",
+      "in": "header",
+      "required": "true",
+      "type": "apiKey"
+    }
+  },
+  "paths": {
+    "/api/v1/substances": {
+      "get": {
+        "tags": [
+          "browse"
+        ],
+        "summary": "Get all substance records",
+        "description": "Returns paging list of substances, wrapped in a response with meta information. View can be expanded or collapsed (e.g. ?view=full for expanded)",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "create and update"
+        ],
+        "summary": "Create a substance record",
+        "description": "Create a new substance record by posting a full JSON record of the substance. This will also perform validation before creation, but will only fail on an \"error\" level validation rule.",
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "auth-username": [],
+            "auth-key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "json of the substance",
+            "type": "application/json",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Bad or malformed request"
+          },
+          "500": {
+            "description": "Error in substance validation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "create and update"
+        ],
+        "summary": "Update a substance record",
+        "description": "Update an existing substance record with a new JSON. This will also perform validation before creation, but will only fail on an \"error\" level validation rule. Note that this update matches substance records based on the \"uuid\" field of the submitted JSON.",
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "auth-username": [],
+            "auth-key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "json of the substance",
+            "type": "application/json",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Bad or malformed request"
+          },
+          "500": {
+            "description": "Error in substance validation"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/novalid": {
+      "put": {
+        "tags": [
+          "create and update"
+        ],
+        "summary": "Update a substance record",
+        "description": "Update an existing substance record with a new JSON. This will NOT perform validation. Note that this update matches substance records based on the \"uuid\" field of the submitted JSON.",
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "auth-username": [],
+            "auth-key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "json of the substance",
+            "type": "application/json",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Bad or malformed request"
+          },
+          "500": {
+            "description": "Error in substance validation"
+          }
+        }
+      }
+    },
+    "/api/v1/vocabularies": {
+      "get": {
+        "tags": [
+          "browse"
+        ],
+        "summary": "Get all vocabularies",
+        "description": "Returns paging list of vocabularies and terms used in the GSRS system.",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/vocabularies/@validate": {
+      "post": {
+        "tags": [
+          "create and update"
+        ],
+        "summary": "Validate CV fragment structure",
+        "description": "Returns validation results of the CV in the GSRS system.",
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "auth-username": [],
+            "auth-key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "json of the CV",
+            "type": "application/json",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response of validation result"
+          },
+          "500": {
+            "description": "CV not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get a substance by id",
+        "description": "Returns a specific substance JSON based on an id. The id is typically the uuid of a record which is simply a randomly generated universally unique id used internally for each substance record. This id is not meant for deep external use, but is flexible for internal use. Unique names and codes can also be used as id elements in these end points.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({name})": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get a substance by name",
+        "description": "Returns a specific substance JSON based on a unique name.",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "A unique name of the substance.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "benzene"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record name or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get names for a substance",
+        "description": "Gets a JSONArray of the names for that substance. Names are objects which include data on the name type, language and other meta data as well as the name strings themselves.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({uuid})/codes": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get codes for a substance",
+        "description": "Gets a JSONArray of the codes for that substance. Codes include external identifiers for substances, as well as classification and external links used by other substance-related resources.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/codes($0)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get the first code object",
+        "description": "Gets the first code object in the codes list for that substance.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/codes($0)/code": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get the first code object's code string",
+        "description": "Gets the first code object's literal code text string in the codes list for that substance",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names(type:of)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get official names",
+        "description": "Gets all \"official\" names for a given substance.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names!(name)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get JSONArray of 'name' string",
+        "description": "Gets a JSONArray of only the \"name\" literal string for each name in the substance",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names(type:cn)!(name)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get JSONArray of common names",
+        "description": "Gets a JSONArray of only the 'name' string for each name in the substance, only when the name is of \"common name\" type.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names(type:cn)!(name)!limit(1)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get JSONArray of first common name",
+        "description": "Gets a JSONArray of only the \"name\" string for each name in the substance, only when the name is of \"common name\" type, limiting to 1 value",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names(type:cn)!(name)!skip(1)!limit(1)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get JSONArray of first common name, skipping first value",
+        "description": "Gets a JSONArray of only the 'name' string for each name in the substance, only when the name is of \"common name\" type, skiping the first value, and limiting to 1 value",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names!sort(created)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get JSONArray of names by creation date (ascending)",
+        "description": "Gets a JSONArray of names, sorted by their creation date (ascending)",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names!revsort(created)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get JSONArray of names by creation date (descending)",
+        "description": "Gets a JSONArray of names, sorted by their creation date (descending)",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names!(createdBy)!distinct()": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "JSONArray of users who created a name",
+        "description": "Gets a JSONArray of all the distinct users who created a name",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/structure/molfile": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get molfile for a structure",
+        "description": "Gets a JSONString of the molfile for a structure",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/structure/$molfile": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get raw text for the molfile of a structure",
+        "description": "Gets a raw text form of a molfile, with plain text mime type",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/structure!$inchikey()": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get InChIKey for a structure",
+        "description": "Generates an InChIKey for the structure. ['inchikey' is a function that is defined by an extension. Other functions can be provided by implementing a FunctionPath, and adding them to the configuration file]",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names!count()": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get name count",
+        "description": "Gets the count of names for given record",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/names!group(type)": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get map of names grouped by name types",
+        "description": "Gets a JSON Object which is a map from name types to lists of names that match those types.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({id})/@hierarchy": {
+      "get": {
+        "tags": [
+          "details"
+        ],
+        "summary": "Get substance relationship hierarchy",
+        "description": "Generates a tree of parent / children substances connected by certain relationship types, settable in the config file. Gets an array of substance relationships that form a flat relationship tree ",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "An id the substance. This is typically the uuid, but a unique name/code or approvalID will also resolve to the record.",
+            "type": "string",
+            "in": "path",
+            "required": "true",
+            "default": "0103a288-6eb6-4ced-b13a-849cd7edf028"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "500": {
+            "description": "Record ID or path not understood"
+          }
+        }
+      }
+    },
+    "/api/v1/suggest?q=ibupro": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Get search suggestions from partially typed word \"ibupro\"",
+        "description": "Returns a list of suggestions for completing supplied text, grouped by fields where that text was found. This can be used for rapid suggestions for global searches.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=ASPIRIN": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Global search for word \"ASPIRIN\"",
+        "description": "Searches (globally) for any substance with 'ASPIRIN' found as a word somewhere in the record. This also returns metadata for top/skip and count information.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=root_approvalID:R16CO5Y76E": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Search Substance by approvlID, which in the default FDA-seeded system is equivalent to the UNII code.",
+        "description": "Searches for a substance with approvalID (UNII) as 'R16CO5Y76E'",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=root_names_name:OXYTOCIN": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Search for \"OXYTOCIN\" inside of a name",
+        "description": "Searches for any substance with \"OXYTOCIN\" found as a word somewhere in a NAME. Returns metadata for top/skip and count information",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=OXYTOCIN%20AND%20root_codes_codeSystem:WIKIPEDIA": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Substance search for \"OXYTOCIN\" within codes which also have codesystem containing \"WIKIPEDIA\"",
+        "description": "Searches for any substance where 'OXYTOCIN' is found as a word somewhere in the record, and there is a code with a codeSystem of 'WIKIPEDIA'",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=root_names_name:\"%5EOXYTOCIN%24\"": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Exact name Search for \"OXYTOCIN\"",
+        "description": "Searches for any substance with \"OXYTOCIN\" is an EXACT name match. The \"^\" character (encoded as %5E), surrounded by quotes, is used to mean the start of a field. The \"$\" character (encoded as %24), also surrounded by quotes, is used to mean the end of a field. Returns metadata for top/skip and count information",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=OXYTO*": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "substance search starting with \"OXYTO\"",
+        "description": "Searches for any substance with a word starting with 'OXYTO'",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=\"APT-101*\"": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "substance search starting with \"APT-101\"",
+        "description": "Searches for any substance with a word starting with 'APT-101'",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=root_names_name:\"*2-Dimethyl*\"": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "substance search containing \"2-Dimethyl\"",
+        "description": "Searches for any substance with a word containing '2-Dimethyl'",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=ASPIRIN%20ESTER": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Substance search with words \"ESTER\" or \"ASPIRIN\"",
+        "description": "Searches for any substance with the words \"ESTER\" or \"ASPIRIN\" contained (lots of matches).",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=ASPIRIN%20AND%20ESTER": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Substance search with words \"ESTER\" and \"ASPIRIN\"",
+        "description": "Searches for any substance with the words \"ESTER\" AND \"ASPIRIN\" contained in any field (few matches).",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=*MAB&facet=Substance%20Class%2Fprotein": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Substance search for words that end in \"MAB\" and are restricted to proteins.",
+        "description": "Using facet filters, this search restricts the results to only include records which have \"protein\" as their \"Substance Class\", while also doing a search for words that end in \"MAB\". Note that facet filters can be applied to any search.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search?q=*MAB&facet=Substance%20Class%2Fprotein&facet=ATC%20Level%201%2FRESPIRATORY%20SYSTEM": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Substance search for words that end in \"MAB\" and are restricted to proteins with ATC level 1 code in \"RESPRITORY SYSTEM\".",
+        "description": "Using facet filters, this search restricts the results to only include records which have \"protein\" as their \"Substance Class\", and \"RESPRITORY SYSTEM\" as their \"ATC Level 1\" facet value. In addition, this also is also doing a search for words that end in \"MAB\". Note that facet filters can be applied to any search.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@bulkQuery": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Get queries from the query list id.",
+        "description": "Returns list of queries. If the id does not exist. It returns an empty list.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id of the query list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "top",
+            "description": "top of the query list",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "skip",
+            "description": "skip of the query list",
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Delete queries from the query list id.",
+        "description": "No return value.",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id of the query list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Save bulk queries in database.",
+        "description": "Returns the \"id\" of the query list saved. In the request body, one query per line is expected.",
+        "parameters": [
+          {
+            "name": "top",
+            "description": "top of the query list",
+            "type": "integer",
+            "in": "path",
+            "required": "false"
+          },
+          {
+            "name": "skip",
+            "description": "skip of the query list",
+            "type": "integer",
+            "in": "path",
+            "required": "false"
+          },
+          {
+            "name": "body",
+            "description": "query list, one query per line",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/bulkSearch": {
+      "get": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "bulk search on saved query list.",
+        "description": "Returns the search result of the bulk search on query list specified by \"bulkQID\".",
+        "parameters": [
+          {
+            "name": "bulkQID",
+            "description": "the id of the query list",
+            "type": "integer",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "top",
+            "description": "top of the result list",
+            "type": "integer",
+            "in": "path",
+            "required": "false"
+          },
+          {
+            "name": "skip",
+            "description": "skip of the result list",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "qTop",
+            "description": "top of the result summary list",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "qSkip",
+            "description": "skip of the result summary list",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "fdim",
+            "description": "facet dimension",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "searchOnIdentifiers",
+            "description": "true (default) for searching with identifiers, or false for searching with more complex queries",
+            "type": "boolean",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "the query list ID does not exist"
+          },
+          "500": {
+            "description": "Error during bulk search"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/structureSearch?q=COCN": {
+      "get": {
+        "tags": [
+          "chemical search"
+        ],
+        "summary": "Substructure search for SMILES/SMARTS string \"COCN\" -  Async",
+        "description": "Searches substances for any structure containing the substructure described by the SMILES string \"COCN\". This is an asynchronous result. Returns a JSONObject with a link and metadata for the full response, as well as a URL for polling if the response has been completed yet or not.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/structureSearch?q=COCN&sync=true": {
+      "get": {
+        "tags": [
+          "chemical search"
+        ],
+        "summary": "Substructure search for SMILES/SMARTS string \"COCN\" - Sync",
+        "description": "Searches substances for any structure containing the substructure described by the SMILES string \"COCN\". This form of the query will block until the search is complete, and then redirect to a resource which contains the results.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/structureSearch?q=CCOC(N)=O&type=sim&cutoff=0.6": {
+      "get": {
+        "tags": [
+          "chemical search"
+        ],
+        "summary": "Searches for similar structures to SMILES \"CCOC(N)=O\"",
+        "description": "Searches substances similar structures to \"CCOC(N)=O\", with tanimoto cutoff of 0.6 (60%). This is an asynchronous result. Returns a JSONObject with a link and metadata for the full response, as well as a URL for polling if the response has been completed yet or not.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/structureSearch?q=CCOC(N)=O&type=exact": {
+      "get": {
+        "tags": [
+          "chemical search"
+        ],
+        "summary": "Searches substances for structure equivalent to SMILES string \"CCOC(N)=O\".",
+        "description": "Searches substances for chemical structures that are tautomerically equivalent to the supplied SMILEs string. This is a stereo sensitive search.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/structureSearch?q=Cl&type=flex": {
+      "get": {
+        "tags": [
+          "chemical search"
+        ],
+        "summary": "Searches substances for disconnected moiety equivalent to SMILES string \"Cl\".",
+        "description": "Searches substances for disconnected moiety equivalent to SMILES string \"Cl\". This is a stereo-insensitive search.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/suggest/@fields": {
+      "get": {
+        "tags": [
+          "meta search"
+        ],
+        "summary": "get suggest fields",
+        "description": "List of suggest fields to help with autocomplete",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search/@facets?q=ASPIRIN&field=Code+System": {
+      "get": {
+        "tags": [
+          "meta search"
+        ],
+        "summary": "Search for \"ASPIRIN\" with \"Code System\" facet",
+        "description": "Gets facet value breakdown for facet \"Code System\" in ASPIRIN search.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search/@facets?q=ASPIRIN&field=Code+System&ffilter=W*": {
+      "get": {
+        "tags": [
+          "meta search"
+        ],
+        "summary": "Search for \"ASPIRIN\" with \"Code System\" facet values start with \"W\"",
+        "description": "Gets facet value breakdown for facet 'Code System' in ASPIRIN search, filtering to only facet values which start with 'W'",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/search/@facets?q=ASPIRIN&field=Code+System&ffilter=count:%5B0%20TO%201%5D": {
+      "get": {
+        "tags": [
+          "meta search"
+        ],
+        "summary": "Search for \"ASPIRIN\" with \"Code System\" facet count between 0 and 1",
+        "description": "Gets facet value breakdown for facet \"Code System\" in ASPIRIN search, filtering to only facet values with count between 0 and 1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@validate": {
+      "post": {
+        "tags": [
+          "create and update"
+        ],
+        "summary": "validate a substance",
+        "description": "Validate a substance - returns valid=false for any errors",
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "auth-username": [],
+            "auth-key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "json of the substance",
+            "type": "application/json",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/api/v1/substances({uuid})/@approve": {
+      "get": {
+        "tags": [
+          "create and update"
+        ],
+        "summary": "\"approve\" a substance to generate approval ID",
+        "description": "Approve/Validate a pending substance to create the approval ID. User can not approve their own substances",
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "auth-username": [],
+            "auth-key": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "uuid of the substance",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userLists/currentUser": {
+      "get": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "Get the names of all the user saved lists owned by current user.",
+        "description": "Returns list of the names of user saved lists of the current user.",
+        "parameters": [
+          {
+            "name": "top",
+            "description": "top of the list of user saved lists",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "skip",
+            "description": "skip of the list of user saved lists",
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userLists/otherUser": {
+      "get": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "ADMIN ROLE ONLY! Get all the names of user saved lists of owned by a specified user.",
+        "description": "Returns list of the names of user saved lists of a specified user. If a user name is not specified, returns names of all user saved lists.",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "user name",
+            "type": "string",
+            "in": "path"
+          },
+          {
+            "name": "top",
+            "description": "top of the list of user saved lists",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "skip",
+            "description": "skip of the list of user saved lists",
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/{list}": {
+      "get": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "Get the list(specified in the path) content of current user.",
+        "description": "Returns an array of the list content of the user saved list specified in the path with \"list\". Returns empty list if the list does not exist.",
+        "parameters": [
+          {
+            "name": "top",
+            "description": "top of the specified user saved list",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "skip",
+            "description": "skip of the specified user saved list",
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/{user}/{list}": {
+      "get": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "ADMIN ROLE ONLY! Get the user saved list(specified in the path) content of the user(specified in the path).",
+        "description": "Returns an array of the list content of the specified user saved list owned by the specified user. Returns empty list if the list does not exist.",
+        "parameters": [
+          {
+            "name": "top",
+            "description": "top of the specified user saved list",
+            "type": "integer",
+            "in": "path"
+          },
+          {
+            "name": "skip",
+            "description": "skip of the specified user saved list",
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/keys": {
+      "post": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "Create a user saved list with list of UUIDs of the substances in the body, separated by comma. For example, deb33005-e87e-4e7f-9704-d5b4c80d3023,79dbcc59-e887-40d1-a0e3-074379b755e4.",
+        "description": "Returns an id which can be used to check the status of this process with the endpoint @userList/status/{id}.",
+        "parameters": [
+          {
+            "name": "listName",
+            "description": "The name of the user saved list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "keys",
+            "description": "The list of UUIDs to save in the user saved list",
+            "type": "string",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "User list with the same name already exists"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/etag/{etagId}": {
+      "post": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "Create a user saved list with etag with the specified etag id. For example, @userList/7c9f73c931335ca3?listName=\"myList\".",
+        "description": "Returns an id which can be used to check the status of this process with the endpoint @userList/status/{id}.",
+        "parameters": [
+          {
+            "name": "listName",
+            "description": "The name of the user saved list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "User list with the same name already exists"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/currentUser/etag/{etagId}": {
+      "put": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "Add more substances to the user saved list using etag.",
+        "description": "Add the substances specified by etag id to the user saved list owned by current user. Returns an id which can be used to check the status of this process with the endpoint @userList/status/{id}.",
+        "parameters": [
+          {
+            "name": "listName",
+            "description": "name of the user saved list to update",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Illegal listName"
+          },
+          "404": {
+            "description": "User list or etag is not found"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/currentUser": {
+      "put": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "Update the user saved list by adding more substances to the list or remove substances from the list.",
+        "description": "Returns an id which can be used to check the status of this process with the endpoint @userList/status/{id}.",
+        "parameters": [
+          {
+            "name": "listName",
+            "description": "name of the user saved list to update",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "keys",
+            "description": "UUIDs that will be updated in the user saved list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "operation",
+            "description": "Operation, \"ADD\" to add to the list, or \"REMOVE\" to remove from the list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Illegal listName, keys, or operation"
+          },
+          "404": {
+            "description": "User or user list is not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "Delete the entire user saved list specified by list name.",
+        "description": "No return value.",
+        "parameters": [
+          {
+            "name": "listName",
+            "description": "name of the user saved list to delete",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Illegal listName"
+          },
+          "404": {
+            "description": "The user list is not found"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/otherUser": {
+      "put": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "ADMIN ROLE ONLY! Update the user saved list by adding more substances to the list or remove substances from the list.",
+        "description": "Returns an id which can be used to check the status of this process with the endpoint @userList/status/{id}.",
+        "parameters": [
+          {
+            "name": "userName",
+            "description": "Owner of the user saved list to delete",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "listName",
+            "description": "name of the user saved list to update",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "keys",
+            "description": "UUIDs that will be updated in the user saved list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "operation",
+            "description": "Operation, \"ADD\" to add to the list, or \"REMOVE\" to remove from the list",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Illegal userName, listName, keys, or operation"
+          },
+          "404": {
+            "description": "User list is not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "text search"
+        ],
+        "summary": "ADMIN ROLE ONLY! Delete the entire user saved list specified by user name and list name.",
+        "description": "No return value.",
+        "parameters": [
+          {
+            "name": "userName",
+            "description": "Owner of the user saved list to delete",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "listName",
+            "description": "Name of the user saved list to delete",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Illegal listName"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@userList/status/{id}": {
+      "get": {
+        "tags": [
+          "user saved list"
+        ],
+        "summary": "Get the status of a saving or updating user saved list process.",
+        "description": "Returns the status of the process.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Could not find the process"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@databaseIndexDiff": {
+      "get": {
+        "tags": [
+          "rebackup and reindex"
+        ],
+        "summary": "Get the difference between database and indexes",
+        "description": "Returns the ids that exist only in database or in indexes, and the counts.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Could not find the process"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@databaseIndexSync": {
+      "put": {
+        "tags": [
+          "rebackup and reindex"
+        ],
+        "summary": "Reindex substances records that are in database, but not in indexes",
+        "description": "Returns the id this async job.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Could not find the process"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@databaseIndexSync({id})": {
+      "get": {
+        "tags": [
+          "rebackup and reindex"
+        ],
+        "summary": "Get the reindex job status.",
+        "description": "Returns the reindex job status.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Could not find the job identified by id"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/({id})/@rebackup": {
+      "get": {
+        "tags": [
+          "rebackup and reindex"
+        ],
+        "summary": "Rebackup the record specified by id.",
+        "description": "Returns the record rebacked.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Could not find the record identified by id"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@rebackup": {
+      "put": {
+        "tags": [
+          "rebackup and reindex"
+        ],
+        "summary": "Rebackup the records specified by the list of ids.",
+        "description": " ",
+        "parameters": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/({id})/@rebackupAndReindex": {
+      "get": {
+        "tags": [
+          "rebackup and reindex"
+        ],
+        "summary": "Rebackup and reindex the record specified by id.",
+        "description": "Returns the record rebacked and reindexed.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Could not find the record identified by id"
+          }
+        }
+      }
+    },
+    "/api/v1/substances/@rebackupAndReindex": {
+      "put": {
+        "tags": [
+          "rebackup and reindex"
+        ],
+        "summary": "Rebackup the records specified by the list of ids.",
+        "description": " ",
+        "parameters": [
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/scheduledjobs": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Fetch a list of scheduled jobs",
+        "description": "Returns a list of ID's, statuses, descriptions, and calls to modify scheduled server tasks",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/scheduledjobs({id})": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Fetch a list of scheduled jobs",
+        "description": "Returns the ID, status, description, and calls to modify a specific scheduled server task",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "the 'id' property of a specific job",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/api/v1/health/info": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Fetch server information",
+        "description": "Returns information about the Database information, cache configuration, and runtime environment",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Retreive all user information",
+        "description": "Returns an array of information about each registered user (except passwords)",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/users({id})": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Retreive user information",
+        "description": "Returns information about a specific user (except for their password)",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "the 'id' or 'username' property of a specific user",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{user}": {
+      "delete": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Delete a user",
+        "description": "Marks a user as inactive",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "description": "The username or id property of that user, either works",
+            "type": "string",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Add a user",
+        "description": "Adds a user by posting required user information",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "description": "The JSON object of the user to be added",
+            "type": "application/json",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Edit a user",
+        "description": "Edits information about a specific a user by putting an edited user object",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "description": "The edited JSON of the user",
+            "type": "application/json",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{user}/password": {
+      "post": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "change a user's password",
+        "description": "let's an admin change someone else's password i.e. for a password reset",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "the 'id' property of a specific user, as long is it is not yourself",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "newPassword",
+            "description": "The new password",
+            "type": "string",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/profile/password": {
+      "post": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Change current user's password",
+        "description": "Allows the currently logged in user to change their own password",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "oldPassword",
+            "description": "The current password",
+            "type": "string",
+            "in": "body",
+            "required": "true"
+          },
+          {
+            "name": "newPassword",
+            "description": "The new password",
+            "type": "string",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "admin/load": {
+      "post": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "import a data set",
+        "description": "Load a record data set into the database. The call returns a JSON object containing the job ID property",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "preserve-audit",
+            "description": "whether audit data should be imported. Boolean value as string",
+            "type": "string",
+            "in": "body",
+            "required": "true"
+          },
+          {
+            "name": "file-name",
+            "description": "The full file to be imported",
+            "type": ".gsrs file",
+            "in": "body",
+            "required": "true"
+          },
+          {
+            "name": "file-type",
+            "description": "The file extension. currently only supports .gsrs",
+            "type": "string",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/jobs/{id}": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "query import status",
+        "description": "returns JSON with information about a loaded data set, such as it's current status and progress",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "the id of the load job in the response of the admin/load call ",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/{search}/export/{etag}": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Get export options",
+        "description": "returns a JSON object containing a list of available export file types and api calls to begin exporting",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "description": "the type of search - substances, structure, or sequence",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "etag",
+            "description": "The etag value of the current /{search type}/search response containing the records to be exported.",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/api/v1/{search}/export/{etag}/{format}?{filename}": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "initialize export",
+        "description": "Begin the process of creating an export file. The response contains an ID for the download",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "etag",
+            "description": "The etag value of the current /{search type}/search response containing the records to be exported.",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "search",
+            "description": "the type of search, usually substances",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "filename",
+            "description": "the desired export file name",
+            "type": "string",
+            "in": "path",
+            "required": "false"
+          },
+          {
+            "name": "format",
+            "description": "the file type of the export",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "name": "exportConfigId",
+            "description": "a known export configuration",
+            "type": "int",
+            "in": "URL",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/{substances}/export/scrubber/@schema": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "JSON Schema for record scrubber",
+        "description": "Set of nested options for the record scrubber used by GSRS to restrict export data",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/{substances}/export/expander/@schema": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "JSON Schema for record expander",
+        "description": "Set of nested options for the record expander used by GSRS add related records to an export data set",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/{substances}/export/configs": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "List all available export configurations",
+        "description": "Scrubber and expander settings for a single export configuration. Output includes any standard configurations that are not saved in the database as well as regular configurations that are saved in the database.  Configurations do not include export file information.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/{substances}/export/config/{id}": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "export configuration detail",
+        "description": "Scrubber and expander settings for a single export configuration from the database. Configurations do not include export file information.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Update an existing export configuration",
+        "description": "Save a modified export configuration (scrubber, expander and entity type) to the database. Configurations do not include export file information.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Successful save of configuration"
+          },
+          "400": {
+            "description": "Bad request, for example, if a configuration with the specified ID does not exist"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Delete an existing export configuration",
+        "description": "Delete an export configuration (scrubber, expander and entity type) from the database. ",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Successful deletion of configuration"
+          },
+          "400": {
+            "description": "Bad request, for example, if a configuration with the specified ID does not exist"
+          }
+        }
+      }
+    },
+    "/api/v1/{substances}/export/config": {
+      "post": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Create new export configuration",
+        "description": "Save a new export configuration (scrubber, expander and entity type) to the database. Configurations do not include export file information.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Successful save of new configuration"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/api/v1/profile/downloads": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Get user's export info",
+        "description": "Retrieve information about all of a users exports",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "The ID of the export process. Found in the response of the /export/{etag} call",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/api/v1/profile/downloads/{id}": {
+      "get": {
+        "tags": [
+          "Administrative"
+        ],
+        "summary": "Get export info",
+        "description": "Retrieve information about an export status, and a url where the file can be deleted, cancelled, or downloaded if complete ",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "The ID of the export process. Found in the response of the /export/{etag} call",
+            "type": "string",
+            "in": "path",
+            "required": "true"
+          },
+          {
+            "in": "path",
+            "name": "context",
+            "description": "Use example for this server. The service context is different from the entity context. The service is typically equal the value of application.name in the service configuration or the folder in gsrs3-main-deployment where the service CI code lives.",
+            "type": "string",
+            "schema": [
+              "json",
+              "text"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          }
+        }
+      }
+    },
+    "/service-info/api/v1/{context}/@configurationProperties": {
+      "get": {
+        "tags": [
+          "service info"
+        ],
+        "summary": "Get a service's properties.",
+        "description": "Lists the service's final Java properties after HOCON has been processed. Note that a service here is not an entity, though the service may or may not have an entity by the same name. This endpoint must be enabled for a given service {context}. For entity services, user must be logged in and have an 'admin' role.",
+        "consumes": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "context",
+            "description": "Use 'substances' for this server.",
+            "type": "string",
+            "default": "substances"
+          },
+          {
+            "in": "query",
+            "name": "fmt",
+            "description": "Json or text response format.",
+            "type": "string",
+            "schema": [
+              "json",
+              "text"
+            ],
+            "default": "text"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not enabled"
+          }
+        }
+      }
+    },
+    "/service-info/api/v1/{context}/@logConfigurationProperties": {
+      "get": {
+        "tags": [
+          "service info"
+        ],
+        "summary": "Get a service's properties and print to the log. Printing to the log can be a more secure option.",
+        "description": "Lists the service's final Java properties after HOCON has been processed. Note that a service here is not an entity, though the service may or may not have an entity by the same name. This endpoint must be enabled for a given service {context}. For entity services, user must be logged in and have an 'admin' role.",
+        "consumes": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "context",
+            "description": "Use 'substances' for this server.",
+            "type": "string",
+            "default": "substances"
+          },
+          {
+            "in": "query",
+            "name": "fmt",
+            "description": "Json or text response format.",
+            "type": "string",
+            "schema": [
+              "json",
+              "text"
+            ],
+            "default": "text"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not enabled"
+          }
+        }
+      }
+    },
+    "/service-info/api/v1/{context}/actuator/health": {
+      "get": {
+        "tags": [
+          "service info"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "context",
+            "description": "Use 'substances' for this server.",
+            "type": "string",
+            "default": "substances"
+          }
+        ],
+        "summary": "Access the SpringBoot actuator for the service {context}. Example 'substances' service context and 'health' actuator endpoint.",
+        "description": "GSRS Gateway friendly way to access Actuator routes. The actuator path and available endpoints are configured for each service.",
+        "consumes": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/service-info/api/v1/{serviceContext}/@indexValueMakerConfigs": {
+      "get": {
+        "tags": [
+          "service info"
+        ],
+        "summary": "Get a list of index value maker configuration objects active for a given service.",
+        "description": "Extensions such as validators, processors, indexers operate in sequence over entity data submitted to the GSRS. Enabled extensions run when JSON is submitted to the API. The configuration allows GSRS administrators to enable the extensions and specify parameters that control order of execution, and behavior. Indexer configuration objects are grouped together in one big list for a service.  Therefore, to get information about configured indexers, the endpoint only requires a URL path parameter for the serviceContext.",
+        "consumes": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "serviceContext",
+            "description": "Use 'substances' for this server.",
+            "type": "string",
+            "default": "substances"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Not enabled"
+          }
+        }
+      }
+    },
+    "/service-info/api/v1/{serviceContext}/@entityProcessorConfigs": {
+      "get": {
+        "tags": [
+          "service info"
+        ],
+        "summary": "Get a list of entity processor configuration objects active for a given service.",
+        "description": "Extensions such as validators, processors, indexers operate in sequence over entity data submitted to the GSRS. Enabled extensions run when JSON is submitted to the API. The configuration allows GSRS administrators to enable the extensions and specify parameters that control order of execution, and behavior. Entity processor configuration objects are grouped together in one big list for a service.  Therefore, to get information about configured entity processors, the endpoint only requires a URL a path parameter for the serviceContext.",
+        "consumes": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "serviceContext",
+            "description": "Use 'substances' for this server.",
+            "type": "string",
+            "default": "substances"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          },
+          "404": {
+            "description": "Not enabled"
+          }
+        }
+      }
+    },
+    "/service-info/api/v1/{serviceContext}/@validatorConfigs/{entityContext}": {
+      "get": {
+        "tags": [
+          "service info"
+        ],
+        "summary": "Get a list of validator configuration objects active for a given service and given entity ",
+        "description": "Extensions such as validators, processors, indexers operate in sequence over entity data submitted to the GSRS. Enabled extensions run when JSON is submitted to the API. The configuration allows GSRS admins to enable the extensions and specify parameters that control order of execution and behavior. In the case of validators, each entity type that exists in a given service has its own set of validators. Therefore, to get information about configured validators, the endpoint requires URL path parameters for both serviceContext and entityContext.",
+        "consumes": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "serviceContext",
+            "description": "Use 'substances' for this server.",
+            "type": "string",
+            "default": "substances"
+          },
+          {
+            "in": "path",
+            "name": "entityContext",
+            "description": "Use 'substances' for this server.",
+            "type": "string",
+            "default": "substances"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "401": {
+            "description": "No user present"
+          },
+          "404": {
+            "description": "Not enabled"
+          }
+        }
+      }
+    }
+  }
+}

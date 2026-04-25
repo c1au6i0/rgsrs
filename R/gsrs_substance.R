@@ -51,7 +51,7 @@ gsrs_substance_out <- function(unii, verbose = TRUE, delay = 0.5) {
     }
 
     resp <- httr2::request(base) |>
-      httr2::req_url_path_append("substances") |>
+      httr2::req_url_path_append("substances/search") |>
       httr2::req_url_query(q = paste0("root_approvalID:", id), top = 1L) |>
       httr2::req_retry(max_tries = 5L, backoff = httr2_backoff) |>
       httr2::req_perform()

@@ -72,9 +72,9 @@ gsrs_unii_from_name_out <- function(names,
     }
 
     resp <- httr2::request(base) |>
-      httr2::req_url_path_append("substances") |>
+      httr2::req_url_path_append("substances/search") |>
       httr2::req_url_query(
-        q = paste0("root_names:\"", nm, "\""),
+        q = paste0("root_names_name:\"", nm, "\""),
         top = top
       ) |>
       httr2::req_retry(max_tries = 5L, backoff = httr2_backoff) |>

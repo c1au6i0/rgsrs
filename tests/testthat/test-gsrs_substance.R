@@ -8,15 +8,35 @@ test_that("gsrs_substance returns a data frame for a valid UNII", {
   skip_on_cran()
   skip_if_offline()
 
-  suppressWarnings(
-    out <- gsrs_substance("R16CO5Y76E", verbose = FALSE)
-  )
   out <- gsrs_substance("R16CO5Y76E", verbose = FALSE)
 
   expect_true(is.data.frame(out))
   expect_equal(nrow(out), 1L)
   expect_equal(out[["query"]], "R16CO5Y76E")
   expect_false(is.na(out[["approval_id"]]))
+})
+
+Sys.sleep(2)
+
+test_that("gsrs_substance returns the correct substance for a given UNII", {
+  skip_on_cran()
+  skip_if_offline()
+
+  # Aspirin
+  asp <- gsrs_substance("R16CO5Y76E", verbose = FALSE)
+  expect_equal(asp[["approval_id"]], "R16CO5Y76E",
+    label = "approval_id should match the queried UNII")
+  expect_true(grepl("aspirin", asp[["preferred_name"]], ignore.case = TRUE),
+    label = "preferred_name should contain 'aspirin'")
+
+  Sys.sleep(2)
+
+  # Nicotine
+  nic <- gsrs_substance("6M3C89ZY6R", verbose = FALSE)
+  expect_equal(nic[["approval_id"]], "6M3C89ZY6R",
+    label = "approval_id should match the queried UNII")
+  expect_true(grepl("nicotine", nic[["preferred_name"]], ignore.case = TRUE),
+    label = "preferred_name should contain 'nicotine'")
 })
 
 Sys.sleep(5)

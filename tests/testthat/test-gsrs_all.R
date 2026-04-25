@@ -11,7 +11,7 @@ test_that("gsrs_all returns a named list with correct elements", {
   out <- gsrs_all("R16CO5Y76E", verbose = FALSE)
 
   expect_true(is.list(out))
-  expect_equal(names(out), c("substance", "names", "codes"))
+  expect_equal(names(out), c("substance", "names", "codes", "structure", "hierarchy"))
 })
 
 Sys.sleep(5)
