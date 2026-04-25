@@ -40,7 +40,7 @@ pak::pak("c1au6i0/rgsrs")
 | `gsrs_unii_from_name()` | Resolve a substance name to its UNII |
 | `gsrs_structure()` | Chemical structure data (SMILES, formula, MW, InChI, …) by UNII |
 | `gsrs_structure_search()` | Substructure / similarity / exact search by SMILES |
-| `gsrs_chem_info()` | Chemical structure info directly from a substance name or CAS number |
+| `gsrs_chem_info()` | Chemical structure info from any identifier: name, CAS, UNII, InChIKey, or SMILES |
 | `gsrs_hierarchy()` | Parent/child relationship tree for a UNII |
 | `gsrs_all()` | Convenience wrapper: substance + names + codes + structure + hierarchy |
 | `gsrs_browse()` | Page through the full GSRS substance catalogue |
@@ -75,6 +75,15 @@ gsrs_chem_info(c("aspirin", "ibuprofen"), type = "name")
 
 # Chemical structure info by CAS number
 gsrs_chem_info(c("50-78-2", "15687-27-1"), type = "cas")
+
+# Chemical structure info by UNII
+gsrs_chem_info("R16CO5Y76E", type = "unii")
+
+# Chemical structure info by InChIKey
+gsrs_chem_info("BSYNRYMUTXBXSQ-UHFFFAOYSA-N", type = "inchikey")
+
+# Chemical structure info by SMILES (exact match)
+gsrs_chem_info("CC(=O)Oc1ccccc1C(=O)O", type = "smiles")
 
 # Everything at once
 out <- gsrs_all("R16CO5Y76E")
