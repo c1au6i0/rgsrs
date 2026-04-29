@@ -7,9 +7,9 @@
 *.tar.gz
 *.zip
 
-# renv
-renv/library/
-renv/staging/
+# renv (local only — not used in CI)
+.Rprofile
+renv/
 
 # pkgdown
 docs/
