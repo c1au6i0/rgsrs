@@ -14,9 +14,9 @@ renv/
 # pkgdown
 docs/
 
-# Generated documentation
-man/*.Rd
-NAMESPACE
+# Generated documentation (committed — required for R CMD check)
+# man/*.Rd
+# NAMESPACE
 
 # macOS
 .DS_Store
