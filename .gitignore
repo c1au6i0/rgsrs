@@ -18,9 +18,6 @@ docs/
 man/*.Rd
 NAMESPACE
 
-# README (generated from Rmd)
-README.md
-
 # macOS
 .DS_Store
 
