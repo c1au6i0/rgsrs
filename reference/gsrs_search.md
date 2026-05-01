@@ -141,10 +141,10 @@ Returns `NULL` on error (with a warning).
 #> 4 https://gsrs.ncats.nih.gov/api/v1/substances(38cc8efd-e65b-4ea9-83be-b37cf3694c38)?view=full
 #> 5 https://gsrs.ncats.nih.gov/api/v1/substances(26fba4d9-e663-444a-84a6-c38fad3af682)?view=full
 #>        date_retrieved
-#> 1 2026-05-01 02:05:03
-#> 2 2026-05-01 02:05:03
-#> 3 2026-05-01 02:05:03
-#> 4 2026-05-01 02:05:03
-#> 5 2026-05-01 02:05:03
+#> 1 2026-05-01 11:30:12
+#> 2 2026-05-01 11:30:12
+#> 3 2026-05-01 11:30:12
+#> 4 2026-05-01 11:30:12
+#> 5 2026-05-01 11:30:12
 # }
 ```

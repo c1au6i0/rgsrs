@@ -85,7 +85,7 @@ on error (with a warning).
 #> 1 R16CO5Y76E          Aspirin        chemical approved
 #> 2 RM1CE97Z4N IBUPROFEN SODIUM        chemical approved
 #>                                   uuid      date_retrieved     query
-#> 1 a05ec20c-8fe2-4e02-ba7f-df69e5e30248 2026-05-01 02:05:15   aspirin
-#> 2 09826010-6401-4df0-8d1d-7be270a26512 2026-05-01 02:05:15 ibuprofen
+#> 1 a05ec20c-8fe2-4e02-ba7f-df69e5e30248 2026-05-01 11:30:24   aspirin
+#> 2 09826010-6401-4df0-8d1d-7be270a26512 2026-05-01 11:30:24 ibuprofen
 # }
 ```

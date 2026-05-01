@@ -59,6 +59,6 @@ UNII). Returns `NULL` on error (with a warning).
 #>                                                                                       self_url
 #> 1 https://gsrs.ncats.nih.gov/api/v1/substances(a05ec20c-8fe2-4e02-ba7f-df69e5e30248)?view=full
 #>        date_retrieved      query
-#> 1 2026-05-01 02:05:12 R16CO5Y76E
+#> 1 2026-05-01 11:30:21 R16CO5Y76E
 # }
 ```

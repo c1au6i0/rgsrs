@@ -113,12 +113,12 @@ Returns `NULL` on error (with a warning).
 #> 5 PART 343 -- INTERNAL ANALGESIC, ANTIPYRETIC, AND ANTIRHEUMATIC DRUG PRODUCTS FOR OVER-THE-COUNTER HUMAN USE|Subpart B--Active Ingredients|Sec. 343.12 Cardiovascular active ingredients.
 #> 6                                                  VATC|ANALGESICS|OTHER ANALGESICS AND ANTIPYRETICS|Salicylic acid and derivatives|acetylsalicylic acid, combinations excl. psycholeptics
 #>   is_classification                                 uuid      date_retrieved
-#> 1              TRUE 02993f14-aa8c-b78d-df34-4d572f50698d 2026-05-01 02:04:54
-#> 2             FALSE 08f6f535-d27d-44d2-b50f-57d838de41c1 2026-05-01 02:04:54
-#> 3             FALSE 0a961196-b583-df05-b166-7a2f27fd8423 2026-05-01 02:04:54
-#> 4              TRUE 0d10f32d-a67f-434b-9074-b3158112afad 2026-05-01 02:04:54
-#> 5              TRUE 0f4c868d-c8e4-462b-ab6a-6cd9dc5dd9a2 2026-05-01 02:04:54
-#> 6              TRUE 155f7e8e-14f8-4352-ab80-f146f2f7ca36 2026-05-01 02:04:54
+#> 1              TRUE 02993f14-aa8c-b78d-df34-4d572f50698d 2026-05-01 11:30:02
+#> 2             FALSE 08f6f535-d27d-44d2-b50f-57d838de41c1 2026-05-01 11:30:02
+#> 3             FALSE 0a961196-b583-df05-b166-7a2f27fd8423 2026-05-01 11:30:02
+#> 4              TRUE 0d10f32d-a67f-434b-9074-b3158112afad 2026-05-01 11:30:02
+#> 5              TRUE 0f4c868d-c8e4-462b-ab6a-6cd9dc5dd9a2 2026-05-01 11:30:02
+#> 6              TRUE 155f7e8e-14f8-4352-ab80-f146f2f7ca36 2026-05-01 11:30:02
 #>        query
 #> 1 R16CO5Y76E
 #> 2 R16CO5Y76E
@@ -140,8 +140,8 @@ Returns `NULL` on error (with a warning).
 #> 26        https://pubchem.ncbi.nlm.nih.gov/compound/2244     <NA>
 #> 43 https://commonchemistry.cas.org/detail?cas_rn=50-78-2     <NA>
 #>    is_classification                                 uuid      date_retrieved
-#> 26             FALSE 51e4a060-1493-4555-a282-045dd71a6f68 2026-05-01 02:04:56
-#> 43             FALSE 9ecfcafa-8aef-49a9-b21b-5a0f94866669 2026-05-01 02:04:56
+#> 26             FALSE 51e4a060-1493-4555-a282-045dd71a6f68 2026-05-01 11:30:05
+#> 43             FALSE 9ecfcafa-8aef-49a9-b21b-5a0f94866669 2026-05-01 11:30:05
 #>         query
 #> 26 R16CO5Y76E
 #> 43 R16CO5Y76E
