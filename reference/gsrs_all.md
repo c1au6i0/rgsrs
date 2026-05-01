@@ -103,7 +103,7 @@ Returns `NULL` on error (with a warning).
 #>                                                                                       self_url
 #> 1 https://gsrs.ncats.nih.gov/api/v1/substances(a05ec20c-8fe2-4e02-ba7f-df69e5e30248)?view=full
 #>        date_retrieved      query
-#> 1 2026-05-01 01:57:24 R16CO5Y76E
+#> 1 2026-05-01 02:04:33 R16CO5Y76E
 #>                              name                        std_name type
 #> 1       2-(ACETYLOXY)BENZOIC ACID       2-(ACETYLOXY)BENZOIC ACID  sys
 #> 2         2-ACETYLOXYBENZOIC ACID         2-ACETYLOXYBENZOIC ACID  sys
@@ -119,12 +119,12 @@ Returns `NULL` on error (with a warning).
 #> 5     FALSE        FALSE        en         
 #> 6     FALSE        FALSE        en         
 #>                                   uuid      date_retrieved      query
-#> 1 c7069333-892e-4828-97aa-6ea06434cb34 2026-05-01 01:57:24 R16CO5Y76E
-#> 2 19144a23-5c43-4ad2-b894-761915330349 2026-05-01 01:57:24 R16CO5Y76E
-#> 3 17796a92-7d19-41dd-8a1d-85f7fc2602ac 2026-05-01 01:57:24 R16CO5Y76E
-#> 4 c5121134-4cd0-40ce-8d68-160951300713 2026-05-01 01:57:24 R16CO5Y76E
-#> 5 48d89039-025b-4fe5-bd9a-c9a876c49ae6 2026-05-01 01:57:24 R16CO5Y76E
-#> 6 31071e18-01f5-4fb8-9c99-336e1b4883e7 2026-05-01 01:57:24 R16CO5Y76E
+#> 1 c7069333-892e-4828-97aa-6ea06434cb34 2026-05-01 02:04:34 R16CO5Y76E
+#> 2 19144a23-5c43-4ad2-b894-761915330349 2026-05-01 02:04:34 R16CO5Y76E
+#> 3 17796a92-7d19-41dd-8a1d-85f7fc2602ac 2026-05-01 02:04:34 R16CO5Y76E
+#> 4 c5121134-4cd0-40ce-8d68-160951300713 2026-05-01 02:04:34 R16CO5Y76E
+#> 5 48d89039-025b-4fe5-bd9a-c9a876c49ae6 2026-05-01 02:04:34 R16CO5Y76E
+#> 6 31071e18-01f5-4fb8-9c99-336e1b4883e7 2026-05-01 02:04:34 R16CO5Y76E
 #>   code_system          code    type
 #> 1     WHO-ATC       C07FX02 PRIMARY
 #> 2   DRUG BANK       DB00945 PRIMARY
@@ -147,12 +147,12 @@ Returns `NULL` on error (with a warning).
 #> 5 PART 343 -- INTERNAL ANALGESIC, ANTIPYRETIC, AND ANTIRHEUMATIC DRUG PRODUCTS FOR OVER-THE-COUNTER HUMAN USE|Subpart B--Active Ingredients|Sec. 343.12 Cardiovascular active ingredients.
 #> 6                                                  VATC|ANALGESICS|OTHER ANALGESICS AND ANTIPYRETICS|Salicylic acid and derivatives|acetylsalicylic acid, combinations excl. psycholeptics
 #>   is_classification                                 uuid      date_retrieved
-#> 1              TRUE 02993f14-aa8c-b78d-df34-4d572f50698d 2026-05-01 01:57:24
-#> 2             FALSE 08f6f535-d27d-44d2-b50f-57d838de41c1 2026-05-01 01:57:24
-#> 3             FALSE 0a961196-b583-df05-b166-7a2f27fd8423 2026-05-01 01:57:24
-#> 4              TRUE 0d10f32d-a67f-434b-9074-b3158112afad 2026-05-01 01:57:24
-#> 5              TRUE 0f4c868d-c8e4-462b-ab6a-6cd9dc5dd9a2 2026-05-01 01:57:24
-#> 6              TRUE 155f7e8e-14f8-4352-ab80-f146f2f7ca36 2026-05-01 01:57:24
+#> 1              TRUE 02993f14-aa8c-b78d-df34-4d572f50698d 2026-05-01 02:04:34
+#> 2             FALSE 08f6f535-d27d-44d2-b50f-57d838de41c1 2026-05-01 02:04:34
+#> 3             FALSE 0a961196-b583-df05-b166-7a2f27fd8423 2026-05-01 02:04:34
+#> 4              TRUE 0d10f32d-a67f-434b-9074-b3158112afad 2026-05-01 02:04:34
+#> 5              TRUE 0f4c868d-c8e4-462b-ab6a-6cd9dc5dd9a2 2026-05-01 02:04:34
+#> 6              TRUE 155f7e8e-14f8-4352-ab80-f146f2f7ca36 2026-05-01 02:04:34
 #>        query
 #> 1 R16CO5Y76E
 #> 2 R16CO5Y76E
