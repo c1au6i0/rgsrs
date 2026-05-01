@@ -10,9 +10,8 @@
 
 Tidy R client for the [FDA Global Substance Registration System
 (GSRS)](https://gsrs.ncats.nih.gov/) REST API. Retrieve substance
-metadata, synonyms, cross-reference codes (CAS, PubChem, ChEMBL,
-WHO-ATC, …), and chemical structure information for any of the 170 000+
-registered substances.
+metadata, synonyms, cross-reference codes, and chemical structure
+information for any of the 170 000+ registered substances.
 
 No API key required.
 
