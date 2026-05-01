@@ -5,6 +5,7 @@
 ^LICENSE\.md$
 ^data-raw$
 ^README\.Rmd$
+^README\.html$
 ^\.github$
 ^cran-comments\.md$
 ^_pkgdown\.yml$
