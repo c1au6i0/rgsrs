@@ -1,0 +1,88 @@
+# rgsrs
+
+Tidy R client for the [FDA Global Substance Registration System
+(GSRS)](https://gsrs.ncats.nih.gov/) REST API. Retrieve substance
+metadata, synonyms, cross-reference codes (CAS, PubChem, ChEMBL,
+WHO-ATC, …), and chemical structure information for any of the 170 000+
+registered substances.
+
+No API key required.
+
+## Installation
+
+``` r
+
+# install.packages("pak")
+pak::pak("c1au6i0/rgsrs")
+```
+
+## Functions
+
+| Function | Description |
+|----|----|
+| [`gsrs_search()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_search.md) | Free-text or Lucene-syntax search |
+| [`gsrs_substance()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_substance.md) | Substance metadata by UNII (vectorised) |
+| [`gsrs_names()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_names.md) | All registered synonyms for a UNII |
+| [`gsrs_codes()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_codes.md) | Cross-reference codes for a UNII, with optional `code_system` filter |
+| [`gsrs_unii_from_name()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_unii_from_name.md) | Resolve a substance name to its UNII |
+| [`gsrs_structure()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_structure.md) | Chemical structure data (SMILES, formula, MW, InChI, …) by UNII |
+| [`gsrs_structure_search()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_structure_search.md) | Substructure / similarity / exact search by SMILES |
+| [`gsrs_chem_info()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_chem_info.md) | Chemical structure info from any identifier: name, CAS, UNII, InChIKey, or SMILES |
+| [`gsrs_hierarchy()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_hierarchy.md) | Parent/child relationship tree for a UNII |
+| [`gsrs_all()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_all.md) | Convenience wrapper: substance + names + codes + structure + hierarchy |
+| [`gsrs_browse()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_browse.md) | Page through the full GSRS substance catalogue |
+| [`gsrs_vocabularies()`](https://c1au6i0.github.io/rgsrs/reference/gsrs_vocabularies.md) | Retrieve controlled vocabulary terms |
+| [`write_dataframes_to_excel()`](https://c1au6i0.github.io/rgsrs/reference/write_dataframes_to_excel.md) | Write a named list of data frames to `.xlsx` |
+
+## Usage
+
+``` r
+
+library(rgsrs)
+
+# Search
+gsrs_search("aspirin", top = 5)
+
+# Fetch by UNII (aspirin = R16CO5Y76E)
+gsrs_substance("R16CO5Y76E")
+
+# All synonyms
+gsrs_names("R16CO5Y76E")
+
+# Cross-references – all systems
+gsrs_codes("R16CO5Y76E")
+
+# Cross-references – CAS only
+gsrs_codes("R16CO5Y76E", code_system = "CAS")
+
+# Name → UNII
+gsrs_unii_from_name(c("aspirin", "ibuprofen"))
+
+# Chemical structure info by name
+gsrs_chem_info(c("aspirin", "ibuprofen"), type = "name")
+
+# Chemical structure info by CAS number
+gsrs_chem_info(c("50-78-2", "15687-27-1"), type = "cas")
+
+# Chemical structure info by UNII
+gsrs_chem_info("R16CO5Y76E", type = "unii")
+
+# Chemical structure info by InChIKey
+gsrs_chem_info("BSYNRYMUTXBXSQ-UHFFFAOYSA-N", type = "inchikey")
+
+# Chemical structure info by SMILES (exact match)
+gsrs_chem_info("CC(=O)Oc1ccccc1C(=O)O", type = "smiles")
+
+# Everything at once
+out <- gsrs_all("R16CO5Y76E")
+str(out, max.level = 1)
+```
+
+All functions accept a `verbose` argument (default `TRUE`) and return
+tidy data frames with a `query` column tracking the input identifier.
+Failed lookups return `NULL` with a warning rather than throwing an
+error.
+
+## License
+
+MIT © 2026 Claudio Zanettini
